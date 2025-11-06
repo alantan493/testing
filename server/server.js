@@ -8,7 +8,6 @@ const nodemailer = require('nodemailer');
 const mailgun = require('mailgun-js');
 
 const mg = mailgun({
-    apiKey: 'xx',
     domain: 'sandboxba30e128476d448faf5d19a040255b70.mailgun.org'
 });
 
