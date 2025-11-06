@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>ASE Inventory</title>
+        <link rel="stylesheet" href="query.css">
+    </head>
+    <body>
+        <h1>Equipment Loan System</h1>
+        <p>Select equipment & loan period</p>
+
+        <table id="query">
+            <thead>
+                <tr>
+                    <th>Item</th>
+                    <th>Quantity</th>
+                    <th>Start Date</th>
+                    <th>End Date</th>
+                    <th>Remark</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Row will be inserted by JS -->
+            </tbody>
+        </table>
+
+        <div class="submit-container">
+            <button id="submitBtn" class="submit-button">Submit</button>
+            <button id="resetBtn" class="reset-button">Reset</button>
+        </div>
+
+        <script src="query.js"></script>
+    </body>
+</html>

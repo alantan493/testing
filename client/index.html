@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>ASE Inventory</title>
+        <link rel="stylesheet" href="style.css">
+    </head>
+    <body>
+        <h1>Asian School of the Environment</h1>
+        <p>Equipment Loan System</p>
+
+        <div id="buttonContainer">
+            <select id="userDropdown">
+                <option value="">Username</option>
+            </select>
+            <br>
+            <input type="text" id="Email" placeholder="Email" readonly>
+            <br>
+            <button onclick="enter()">Enter</button>
+        </div>
+
+        <div id="adminPopup" class="popup hidden">
+            <div class="popup-content">
+                <p>You are an admin. Select the page you would like to proceed.</p>
+                <button id="goDashboard">Dashboard</button>
+                <button id="goLoan">Loan System</button>
+            </div>
+        </div>
+    </body>
+
+    <script src="script.js"></script>
+</html>

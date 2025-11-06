@@ -1,0 +1,44 @@
+[
+  {
+    "id": 1,
+    "name": "First Aid Kit (Small)",
+    "quantity": 10,
+    "available_quantity": 10,
+    "class": "field"
+  },
+  {
+    "id": 2,
+    "name": "First Aid Kit (Medium)",
+    "quantity": 5,
+    "available_quantity": 5,
+    "class": "field"
+  },
+  {
+    "id": 3,
+    "name": "First Aid Kit (Large)",
+    "quantity": 2,
+    "available_quantity": 2,
+    "class": "field"
+  },
+  {
+    "id": 4,
+    "name": "First Aid Box",
+    "quantity": 10,
+    "available_quantity": 10,
+    "class": "safety"
+  },
+  {
+    "id": 5,
+    "name": "Screwdriver",
+    "quantity": 10,
+    "available_quantity": 10,
+    "class": "lab"
+  },
+  {
+    "id": 6,
+    "name": "Fire Warden",
+    "quantity": 5,
+    "available_quantity": 5,
+    "class": "safety"
+  }
+]

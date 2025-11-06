@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="EN">
+<head>
+    <meta charset="UTF-8">
+    <title>ASE Inventory</title>
+    <link rel="stylesheet" href="inventory.css">
+</head>
+<body>
+    <h1>Inventory List</h1>
+    <button id="addNewBtn" class="action-button">Add New</button>
+    <table id="equipmentTable">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Class</th>
+                <th>Total Quantity</th>
+                <th>Available Quantity</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- JS will populate rows here -->
+        </tbody>
+    </table>
+
+    <div id="equipmentModal" class="modal" style="display:none;">
+        <div class="modal-content">
+            <span id="closeModal" class="close">&times;</span>
+            <h2 id="modalTitle">Add/Edit Equipment</h2>
+            <form id="equipmentForm">
+                <input type="hidden" id="equipmentID">
+                <label>Name: <input type="text" id="equipmentName" required></label><br>
+                <label>Class: 
+                    <select id="equipmentClass" required>
+                        <option value="field">Field</option>
+                        <option value="safety">Safety</option>
+                        <option value="lab">Lab</option>
+                        <option value="new">Create a new class</option>
+                    </select>
+                </label>
+                <br>
+                <label id="newClassLabel" style="display:none;">New Class: <input type="text" id="newClassInput"></label><br>
+                <label>Total Quantity: <input type="number" id="equipmentQuantity" min="1" required></label><br>
+                <button type="submit" id="submitBtn">Save</button>
+            </form>
+        </div>
+    </div>
+    <script src="inventory.js"></script>
+</body>
+</html>

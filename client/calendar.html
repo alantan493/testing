@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>ASE Inventory</title>
+    <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.css" rel="stylesheet" />
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 30px;
+        }
+        #calendar {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        .fc-event-title {
+            white-space: nowrap !important;
+            overflow: visible !important;
+            font-size: 11px !important;
+            line-height: 1.2 !important;
+            text-overflow: clip !important;
+        }
+        .fc-daygrid-event {
+            margin-top: 1px !important;
+            margin-bottom: 1px !important;
+            min-width: 0 !important;
+        }
+        .fc-event {
+            font-size: 11px !important;
+            padding: 1px 2px !important;
+            min-width: 0 !important;
+        }
+        .fc-daygrid-event-harness {
+            margin-right: 2px !important;
+        }
+        .fc-event-title-container {
+            overflow: visible !important;
+        }
+        .fc-event-main {
+            overflow: visible !important;
+        }
+        select {
+            margin-bottom: 20px;
+            padding: 5px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Equipment Loan Schedule</h1>
+
+    <label for="classFilter">Filter by class:</label>
+    <select id="classFilter">
+        <option value="all">All</option>
+    </select>
+
+    <div id="calendar"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const calendarEl = document.getElementById('calendar');
+            const classFilter = document.getElementById('classFilter');
+            let classColors = {};
+
+            fetch('http://localhost:3001/class-colors')
+                .then(res => res.json())
+                .then(colors => {
+                    classColors = colors;
+                    populateClassFilterDropdown();
+                    initCalendar();
+                })
+                .catch(() => {
+                    classColors = { field: '#1abc9c', safety: '#e67e22', lab: '#3498db' };
+                    populateClassFilterDropdown();
+                    initCalendar();
+                });
+
+            function populateClassFilterDropdown() {
+                const classFilter = document.getElementById('classFilter');
+                while (classFilter.options.length > 1) {
+                    classFilter.remove(1);
+                }
+                Object.keys(classColors).forEach(className => {
+                    const option = document.createElement('option');
+                    option.value = className;
+                    option.textContent = className.charAt(0).toUpperCase() + className.slice(1);
+                    classFilter.appendChild(option);
+                });
+            }
+
+            function initCalendar() {
+                const calendar = new FullCalendar.Calendar(calendarEl, {
+                    initialView: 'dayGridMonth',
+                    headerToolbar: {
+                        left: 'prev,next today',
+                        center: 'title',
+                        right: 'dayGridMonth,dayGridWeek'
+                    },
+                    events: [],
+                    eventDisplay: 'block',
+                    displayEventTime: false,
+                    dayMaxEvents: false,
+                    eventClick: function(info) {
+                        const event = info.event;
+                        const props = event.extendedProps;
+                        let details = `Equipment: ${props.item || 'N/A'}\n`;
+                        details += `Quantity: ${props.quantity || 'N/A'}\n`;
+                        details += `Borrower: ${props.name || 'N/A'}\n`;
+                        details += `Email: ${props.email || 'N/A'}\n`;
+                        details += `Period: ${props.startDate} - ${props.endDate}\n`;
+                        details += `Status: ${props.isReturned ? 'Returned' : 'Active'}\n`;
+                        if (props.remark) details += `Remark: ${props.remark}`;
+                        alert(details);
+                    },
+                    eventContent: function(info) {
+                        const event = info.event;
+                        const props = event.extendedProps;
+                        let title = props.item || event.title;
+                        if (props.quantity) {
+                            title = `${title} (${props.quantity})`;
+                        }
+                        const isMultiDay = event.start && event.end && (event.end.getTime() - event.start.getTime()) > 86400000;
+                        if (!isMultiDay && title.length > 15) {
+                            title = title.substring(0, 12) + '...';
+                        }
+                        return { html: `<div style=\"font-size: 11px; line-height: 1.2; padding: 1px; overflow: visible; white-space: nowrap;\">${title}</div>` };
+                    },
+                    eventDidMount: function(info) {
+                        const eventClass = info.event.extendedProps.class;
+                        if (classColors[eventClass]) {
+                            info.el.style.backgroundColor = classColors[eventClass];
+                            info.el.style.borderColor = classColors[eventClass];
+                        }
+                    }
+                });
+                calendar.render();
+
+                function fetchAndFilterEvents(filterClass) {
+                    fetch('http://localhost:3001/calendar-events')
+                        .then(response => response.json())
+                        .then(data => {
+                            data.forEach(ev => {
+                                if (ev.extendedProps && ev.extendedProps.class && classColors[ev.extendedProps.class]) {
+                                    ev.backgroundColor = classColors[ev.extendedProps.class];
+                                    ev.borderColor = classColors[ev.extendedProps.class];
+                                }
+                            });
+                            const filtered = filterClass === 'all' ? data : data.filter(ev => {
+                                return ev.extendedProps && ev.extendedProps.class === filterClass;
+                            });
+                            calendar.removeAllEvents();
+                            calendar.addEventSource(filtered);
+                        })
+                        .catch(err => {
+                            console.error('Error fetching events:', err);
+                        });
+                }
+
+                classFilter.addEventListener('change', function() {
+                    fetchAndFilterEvents(this.value);
+                });
+
+                fetchAndFilterEvents('all');
+            }
+        });
+    </script>
+</body>
+</html>

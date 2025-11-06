@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ASE Inventory</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>Loan Confirmation</h1>
+    <p id="confirmationMessage">Thank you! Your loan request has been submitted.</p>
+    <a href="index.html"><button>Back to Home</button></a>
+
+    <script>
+        const name = localStorage.getItem("userName") || "User";
+        const email = localStorage.getItem("userEmail") || "your email";
+
+        document.getElementById("confirmationMessage").textContent = `Thank you, ${name}! Your booking has been submitted. A confirmation email will be sent to ${email}.`;
+    </script>
+</body>
+</html>

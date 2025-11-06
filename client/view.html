@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>ASE Inventory</title>
+        <link rel="stylesheet" href="view.css">
+    </head>
+    <body>
+        <h1>Loan Records</h1>
+        
+        <div class="control-bar">
+            <button id="calendarBtn" class="calendar-button">View in calendar</button>
+            <button id="clearBtn" class="clear-button">Clear all records</button>
+            <button id="inventoryList" class="inventory-list">Inventory List</button>
+        </div>
+        
+        <table id="bookingTable">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Item</th>
+                    <th>Quantity</th>
+                    <th>Start Date</th>
+                    <th>End Date</th>
+                    <th>Remark</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- JS will populate rows here -->
+            </tbody>
+        </table>
+        <script src="view.js"></script>
+    </body>
+</html>

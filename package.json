@@ -1,0 +1,26 @@
+{
+  "name": "loan-system",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "dev": "concurrently \"npm:dev-client\" \"npm:dev-server\"",
+    "dev-client": "npm run dev --prefix client",
+    "dev-server": "node server/server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "body-parser": "^2.2.0",
+    "cors": "^2.8.5",
+    "express": "^5.1.0",
+    "mailgun-js": "^0.22.0",
+    "nodemailer": "^7.0.4",
+    "sequelize": "^6.37.7",
+    "sqlite3": "^5.1.7"
+  },
+  "devDependencies": {
+    "concurrently": "^9.2.0"
+  }
+}
