@@ -7,10 +7,6 @@ const { Sequelize, DataTypes } = require('sequelize');
 const nodemailer = require('nodemailer');
 const mailgun = require('mailgun-js');
 
-const mg = mailgun({
-    domain: 'sandboxba30e128476d448faf5d19a040255b70.mailgun.org'
-});
-
 const app = express();
 const PORT = 3001;
 
